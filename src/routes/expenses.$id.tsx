@@ -1,5 +1,5 @@
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, LogOut } from 'lucide-react';
 import { useForm } from '@tanstack/react-form';
 
 import {
@@ -8,6 +8,8 @@ import {
   updateExpense,
   type ExpenseItem
 } from './-index.server';
+import { logout } from './-auth.server';
+import { requireAuth } from './-auth';
 
 type FormItem = {
   name: string;
@@ -53,6 +55,7 @@ const formatDate = (value: string) => {
 };
 
 export const Route = createFileRoute('/expenses/$id')({
+  beforeLoad: requireAuth,
   loader: async ({ params }) => {
     const id = Number(params.id);
     if (!Number.isFinite(id)) return null;
@@ -160,20 +163,37 @@ function EditExpense() {
               {formatDate(entry.date)}
             </p>
           </div>
-          <Link
-            to='/'
-            search={{ month: getMonthValue(entry.date) }}
-            className='rounded-lg border px-3 py-2 text-xs text-slate-700 transition-all hover:text-slate-900 dark:text-indigo-100 dark:hover:text-white md:px-4 md:text-sm'
-            style={{ borderColor: 'rgba(93, 103, 227, 0.3)' }}
-          >
-            <span className='inline-flex items-center gap-2'>
-              <ArrowLeft
+          <div className='flex items-center gap-2'>
+            <button
+              type='button'
+              onClick={async () => {
+                await logout();
+                router.navigate({ to: '/login' });
+              }}
+              className='rounded-lg border px-3 py-2 text-xs text-slate-700 transition-all hover:text-slate-900 dark:text-indigo-100 dark:hover:text-white md:px-4 md:text-sm'
+              style={{ borderColor: 'rgba(93, 103, 227, 0.3)' }}
+              aria-label='Log out'
+            >
+              <LogOut
                 size={16}
                 aria-hidden='true'
               />
-              Back
-            </span>
-          </Link>
+            </button>
+            <Link
+              to='/'
+              search={{ month: getMonthValue(entry.date) }}
+              className='rounded-lg border px-3 py-2 text-xs text-slate-700 transition-all hover:text-slate-900 dark:text-indigo-100 dark:hover:text-white md:px-4 md:text-sm'
+              style={{ borderColor: 'rgba(93, 103, 227, 0.3)' }}
+            >
+              <span className='inline-flex items-center gap-2'>
+                <ArrowLeft
+                  size={16}
+                  aria-hidden='true'
+                />
+                Back
+              </span>
+            </Link>
+          </div>
         </div>
 
         <form

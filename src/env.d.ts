@@ -2,6 +2,8 @@
 
 export type Env = {
   expense_db: D1Database
+  AUTH_EMAIL: string
+  AUTH_PASSWORD: string
 }
 
 declare module '@tanstack/react-start' {

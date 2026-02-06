@@ -1,10 +1,13 @@
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
-import { Plus } from 'lucide-react';
+import { LogOut, Plus } from 'lucide-react';
 import { deleteExpense, getExpenses } from './-index.server';
+import { logout } from './-auth.server';
+import { requireAuth } from './-auth';
 
 export const Route = createFileRoute('/')({
+  beforeLoad: requireAuth,
   validateSearch: (search) => {
     const month =
       typeof search.month === 'string' && search.month
@@ -61,6 +64,14 @@ function ExpenseCalculator() {
       router.invalidate();
     } catch (error) {
       console.error('Failed to delete expense:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      router.navigate({ to: '/login' });
     }
   };
 
@@ -140,16 +151,30 @@ function ExpenseCalculator() {
               </span>
             </p>
           </div>
-          <Link
-            to='/create'
-            className='flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold shadow-lg transition-all hover:shadow-xl md:px-4 md:text-sm'
-            style={{
-              background: 'linear-gradient(135deg, #5d67e3 0%, #8b5cf6 100%)',
-              color: 'white'
-            }}
-          >
-            New <Plus size={16} />
-          </Link>
+          <div className='flex items-center gap-2'>
+            <button
+              type='button'
+              onClick={handleLogout}
+              className='rounded-lg border px-3 py-2 text-xs text-slate-700 transition-all hover:text-slate-900 dark:text-indigo-100 dark:hover:text-white md:px-4 md:text-sm'
+              style={{ borderColor: 'rgba(93, 103, 227, 0.3)' }}
+              aria-label='Log out'
+            >
+              <LogOut
+                size={16}
+                aria-hidden='true'
+              />
+            </button>
+            <Link
+              to='/create'
+              className='flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold shadow-lg transition-all hover:shadow-xl md:px-4 md:text-sm'
+              style={{
+                background: 'linear-gradient(135deg, #5d67e3 0%, #8b5cf6 100%)',
+                color: 'white'
+              }}
+            >
+              New <Plus size={16} />
+            </Link>
+          </div>
         </div>
 
         <div className='flex flex-col gap-2 md:flex-row md:items-end md:justify-between md:gap-3'>

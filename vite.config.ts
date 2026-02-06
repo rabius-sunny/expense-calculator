@@ -16,7 +16,11 @@ const config = defineConfig({
   },
   plugins: [
     devtools(),
-    cloudflare({ viteEnvironment: { name: 'ssr' }, remoteBindings: false }),
+    cloudflare({
+      configPath: './wrangler.dev.jsonc',
+      viteEnvironment: { name: 'ssr' },
+      remoteBindings: false,
+    }),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],

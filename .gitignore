@@ -6,6 +6,7 @@ dist-ssr
 count.txt
 .env.local
 wrangler.jsonc
+wrangler.dev.jsonc
 .nitro
 .tanstack
 .wrangler
