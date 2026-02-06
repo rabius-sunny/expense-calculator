@@ -1,6 +1,16 @@
 {
-  "short_name": "Expense Calculator",
+  "short_name": "Expenses",
   "name": "Expense Calculator",
+  "description": "Track daily expenses with monthly totals.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#e2e8f0",
+  "background_color": "#ffffff",
+  "categories": ["finance", "productivity"],
   "icons": [
     {
       "src": "favicon.ico",
@@ -15,11 +25,9 @@
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "prefer_related_applications": false
 }
