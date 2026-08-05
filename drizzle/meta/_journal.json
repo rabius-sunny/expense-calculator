@@ -8,6 +8,13 @@
       "when": 1770400287850,
       "tag": "0000_brave_sprite",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1785965840457,
+      "tag": "0001_melodic_iron_monger",
+      "breakpoints": true
     }
   ]
 }

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CreateRouteImport } from './routes/create'
+import { Route as CashflowRouteImport } from './routes/cashflow'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExpensesIdRouteImport } from './routes/expenses.$id'
 
@@ -22,6 +23,11 @@ const LoginRoute = LoginRouteImport.update({
 const CreateRoute = CreateRouteImport.update({
   id: '/create',
   path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CashflowRoute = CashflowRouteImport.update({
+  id: '/cashflow',
+  path: '/cashflow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ExpensesIdRoute = ExpensesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cashflow': typeof CashflowRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
   '/expenses/$id': typeof ExpensesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cashflow': typeof CashflowRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
   '/expenses/$id': typeof ExpensesIdRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cashflow': typeof CashflowRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
   '/expenses/$id': typeof ExpensesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create' | '/login' | '/expenses/$id'
+  fullPaths: '/' | '/cashflow' | '/create' | '/login' | '/expenses/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/login' | '/expenses/$id'
-  id: '__root__' | '/' | '/create' | '/login' | '/expenses/$id'
+  to: '/' | '/cashflow' | '/create' | '/login' | '/expenses/$id'
+  id: '__root__' | '/' | '/cashflow' | '/create' | '/login' | '/expenses/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CashflowRoute: typeof CashflowRoute
   CreateRoute: typeof CreateRoute
   LoginRoute: typeof LoginRoute
   ExpensesIdRoute: typeof ExpensesIdRoute
@@ -85,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cashflow': {
+      id: '/cashflow'
+      path: '/cashflow'
+      fullPath: '/cashflow'
+      preLoaderRoute: typeof CashflowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CashflowRoute: CashflowRoute,
   CreateRoute: CreateRoute,
   LoginRoute: LoginRoute,
   ExpensesIdRoute: ExpensesIdRoute,

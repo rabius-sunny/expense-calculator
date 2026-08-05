@@ -1,7 +1,7 @@
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
-import { LogOut, Plus } from 'lucide-react';
+import { LogOut, Plus, Wallet } from 'lucide-react';
 import { deleteExpense, getExpenses } from './-index.server';
 import { logout } from './-auth.server';
 import { requireAuth } from './-auth';
@@ -164,6 +164,14 @@ function ExpenseCalculator() {
                 aria-hidden='true'
               />
             </button>
+            <Link
+              to='/cashflow'
+              className='flex items-center gap-2 rounded-lg border px-3 py-2 text-xs text-slate-700 transition-all hover:text-slate-900 dark:text-indigo-100 dark:hover:text-white md:px-4 md:text-sm'
+              style={{ borderColor: 'rgba(93, 103, 227, 0.3)' }}
+            >
+              <Wallet size={16} aria-hidden='true' />
+              Cash Flow
+            </Link>
             <Link
               to='/create'
               className='flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold shadow-lg transition-all hover:shadow-xl md:px-4 md:text-sm'
